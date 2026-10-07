@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CLOV — Streetwear urbano. BE DIFF. YOU FOUND US.">
+<title>CLOV — BE DIFF (Official Site)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #080808;
+  --panel: #111111;
+  --soft: #181818;
+  --text: #f5f5f5;
+  --muted: #9a9a9a;
+  --line: #222222;
+  --accent: #d8ff3e;
+  --accent-glow: rgba(216, 255, 62, 0.25);
+  --max: 1400px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
+html { scroll-behavior: smooth; }
+body { font-family: Inter, Arial, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+button { font: inherit; color: inherit; border: none; background: none; }
+img { width: 100%; display: block; }
+.container { width: min(92%, var(--max)); margin: auto; }
+
+/* CURSOR TÁCTICO BLANCO */
+.cursor-dot { 
+  position: fixed; 
+  width: 8px; 
+  height: 8px; 
+  background: #ffffff; 
+  border-radius: 50%; 
+  pointer-events: none; 
+  z-index: 99999; 
+  transform: translate(-50%, -50%); 
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 1);
+}
+.cursor-outline { 
+  position: fixed; 
+  width: 36px; 
+  height: 36px; 
+  border: 2px solid #ffffff; 
+  border-radius: 50%; 
+  pointer-events: none; 
+  z-index: 99998; 
+  transform: translate(-50%, -50%); 
+  transition: transform .12s ease-out; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+body.hovering .cursor-outline { 
+  transform: translate(-50%, -50%) scale(1.6); 
+  background: rgba(255, 255, 255, 0.2); 
+  border-color: #ffffff;
+}
+
+/* MARQUEE TICKER */
+.ticker-wrap { background: var(--accent); color: #000; overflow: hidden; padding: 7px 0; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; position: relative; z-index: 1001; }
+.ticker-move { display: flex; gap: 50px; width: max-content; animation: marquee 25s linear infinite; }
+.ticker-item { display: flex; align-items: center; gap: 15px; white-space: nowrap; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* NAV */
+.nav { position: fixed; top: 31px; left: 0; right: 0; z-index: 1000; padding: 18px 0; transition: .3s; }
+.nav.scrolled { top: 0; background: rgba(8, 8, 8, 0.94); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.logo { font: 900 30px/1 "Space Grotesk"; letter-spacing: -2px; user-select: none; }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 28px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+.nav-links a { position: relative; }
+.nav-links a:after { content: ""; position: absolute; bottom: -7px; left: 0; width: 0; height: 1px; background: var(--accent); transition: .3s; }
+.nav-links a:hover:after { width: 100%; }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.icon-btn { border: 1px solid var(--line); background: rgba(255, 255, 255, .04); width: 43px; height: 43px; border-radius: 50%; display: grid; place-items: center; transition: .25s; position: relative; }
+.icon-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+.cart-badge { position: absolute; top: -2px; right: -2px; background: var(--accent); color: #000; font-size: 10px; font-weight: 900; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; }
+
+/* HERO SECTION */
+.hero { min-height: 100vh; position: relative; display: grid; place-items: center; overflow: hidden; background: radial-gradient(circle at 75% 40%, #222 0, transparent 40%), linear-gradient(115deg, #070707 35%, #151515 100%); }
+.hero-content { position: relative; z-index: 2; width: min(92%, var(--max)); padding-top: 90px; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 4px; color: var(--accent); font-weight: 800; margin-bottom: 25px; background: rgba(216,255,62,0.08); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(216,255,62,0.2); }
+
+.hero h1 { 
+  font: 900 clamp(48px, 15vw, 240px)/.85 "Space Grotesk"; 
+  letter-spacing: -3px; 
+  text-transform: uppercase; 
+  word-break: break-word;
+}
+.hero h1 span { display: block; }
+
+@media (min-width: 768px) {
+  .hero h1 { letter-spacing: -8px; line-height: .8; }
+}
+@media (min-width: 1200px) {
+  .hero h1 { letter-spacing: -12px; }
+}
+
+.hero-sub { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 40px; gap: 20px; }
+.hero-sub p { max-width: 420px; color: #bbb; line-height: 1.7; font-size: 15px; }
+.buttons { display: flex; gap: 12px; }
+.btn { display: inline-block; padding: 16px 28px; border: 1px solid #444; background: #fff; color: #000; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; transition: .25s; text-align: center; }
+.btn:hover { transform: translateY(-3px); background: var(--accent); border-color: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
+.btn.dark { background: transparent; color: #fff; border-color: #333; }
+.btn.dark:hover { background: var(--text); color: #000; }
+
+/* SECTIONS */
+section { padding: 100px 0; border-bottom: 1px solid var(--line); }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+.section-label { font-size: 11px; color: var(--accent); letter-spacing: 3px; font-weight: 800; margin-bottom: 12px; }
+
+h2 { font: 800 clamp(32px, 5vw, 75px)/.95 "Space Grotesk"; letter-spacing: -1.5px; }
+@media (min-width: 768px) { h2 { letter-spacing: -3px; } }
+
+/* SHOP & FILTERS */
+.shop-controls { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 28px; flex-wrap: wrap; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter { background: transparent; border: 1px solid var(--line); padding: 10px 18px; font-size: 11px; font-weight: 700; letter-spacing: 1px; transition: .2s; }
+.filter.active, .filter:hover { background: var(--text); color: #000; border-color: var(--text); }
+.search-box input { background: #121212; border: 1px solid var(--line); padding: 10px 14px; font-size: 12px; color: #fff; outline: none; transition: .3s; min-width: 200px; }
+.search-box input:focus { border-color: var(--accent); }
+
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.product { background: #101010; border: 1px solid rgba(255,255,255,0.03); transition: .3s; position: relative; }
+.product:hover { border-color: rgba(216,255,62,0.3); transform: translateY(-4px); }
+.product-img { aspect-ratio: 4/5; background: #1a1a1a; overflow: hidden; position: relative; cursor: pointer; }
+.product-img img { width: 100%; height: 100%; object-fit: cover; transition: .6s; }
+.product:hover img { transform: scale(1.05); }
+.quick-view-badge {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: rgba(8,8,8,0.85); color: #fff; font-size: 10px; font-weight: 800;
+  letter-spacing: 1.5px; padding: 8px 16px; border-radius: 20px; border: 1px solid #333;
+  opacity: 0; transition: .3s; backdrop-filter: blur(6px); pointer-events: none;
+}
+.product-img:hover .quick-view-badge { opacity: 1; }
+
+.product-info { padding: 18px; }
+.product-info h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; cursor: pointer; transition: .2s; }
+.product-info h3:hover { color: var(--accent); }
+.product-info p { color: #888; font-size: 11px; margin-bottom: 10px; }
+.price { font-weight: 800; font-size: 16px; color: #fff; }
+
+.sizes { display: flex; gap: 5px; margin: 10px 0; }
+.size-btn { background: #1a1a1a; border: 1px solid #333; font-size: 10px; padding: 4px 8px; font-weight: 700; color: #aaa; transition: .2s; }
+.size-btn.selected, .size-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+.add { width: 100%; margin-top: 8px; padding: 12px; border: 1px solid #333; background: transparent; font-size: 11px; font-weight: 800; letter-spacing: 1px; transition: .2s; }
+.add:hover { background: var(--text); color: #000; border-color: var(--text); }
+
+/* SECCIÓN: CREADOR DE OUTFITS / STUDIO CUSTOMIZER */
+.builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: #0c0c0c; border: 1px solid var(--line); padding: 35px; border-radius: 12px; }
+.builder-preview { background: #151515; border: 1px solid #282828; min-height: 420px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 25px; gap: 15px; }
+.preview-layer-box { width: 100%; background: #0c0c0c; border: 1px solid #222; border-radius: 6px; padding: 12px 18px; display: flex; align-items: center; gap: 15px; }
+.preview-layer-box img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; background: #1a1a1a; }
+.preview-layer-info h4 { font-size: 12px; font-weight: 800; color: #fff; text-transform: uppercase; }
+.preview-layer-info span { font-size: 11px; color: var(--accent); font-weight: 700; }
+.builder-controls h3 { font-size: 22px; margin-bottom: 20px; font-family: "Space Grotesk"; }
+.control-group { margin-bottom: 20px; }
+.control-group label { display: block; font-size: 11px; color: var(--muted); font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; }
+.option-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.opt-btn { background: #181818; border: 1px solid #333; padding: 9px 14px; font-size: 11px; font-weight: 700; transition: .2s; }
+.opt-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+.builder-total { font-size: 24px; font-weight: 900; margin: 25px 0 15px; color: #fff; font-family: "Space Grotesk"; }
+
+/* LIMITED DROP */
+.limited { background: radial-gradient(circle at 20% 50%, #151515 0, #080808 100%); }
+.limited-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.limited-art { min-height: 480px; position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; display: grid; place-items: center; background: #000; }
+.censored-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(18px) grayscale(40%) contrast(150%); transform: scale(1.15); opacity: 0.6; }
+.censored-overlay { position: absolute; inset: 0; background: radial-gradient(circle, rgba(8,8,8,0.2) 0%, rgba(8,8,8,0.95) 85%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.45) 3px, rgba(0, 0, 0, 0.45) 6px); z-index: 1; }
+.limited-text-box { position: relative; z-index: 2; text-align: center; }
+.classified-badge { display: inline-block; background: #ff2a2a; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: 3px; padding: 4px 10px; margin-bottom: 12px; border-radius: 2px; box-shadow: 0 0 15px rgba(255,42,42,0.4); }
+.drop-number { font-size: 12px; letter-spacing: 4px; color: var(--accent); font-weight: 800; }
+.countdown { display: flex; gap: 12px; margin: 25px 0; flex-wrap: wrap; }
+.timer-box { background: #141414; border: 1px solid #282828; padding: 12px 18px; text-align: center; min-width: 70px; border-radius: 4px; flex: 1; }
+.timer-num { font: 800 26px "Space Grotesk"; color: var(--accent); display: block; }
+.timer-unit { font-size: 9px; letter-spacing: 2px; color: #777; }
+.stock { margin: 25px 0 35px; }
+.stock-line { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 8px; font-weight: 700; }
+.bar { height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 18%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+
+/* MANIFESTO / ABOUT */
+.brand { text-align: center; min-height: 55vh; display: grid; place-items: center; }
+.brand h2 { font-size: clamp(40px, 11vw, 150px); letter-spacing: -2px; line-height: 0.9; }
+@media (min-width: 768px) { .brand h2 { letter-spacing: -6px; } }
+.brand p { max-width: 580px; margin: 25px auto 0; color: #999; line-height: 1.8; font-size: 16px; }
+
+/* CONTACT */
+.contact { background: var(--accent); color: #000; }
+.contact p { margin: 20px 0 30px; max-width: 520px; line-height: 1.7; font-size: 16px; font-weight: 500; }
+.contact .btn { border-color: #000; background: #000; color: #fff; }
+.contact .btn:hover { background: #fff; color: #000; border-color: #fff; }
+
+/* FOOTER */
+.footer { padding: 70px 0 35px; background: #060606; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; padding-bottom: 50px; border-bottom: 1px solid var(--line); }
+.footer h4 { font-size: 11px; letter-spacing: 2px; color: #666; margin-bottom: 20px; font-weight: 800; }
+.footer a { display: block; font-size: 13px; margin: 10px 0; color: #aaa; transition: .2s; }
+.footer a:hover { color: var(--accent); }
+.footer-brand p { color: #666; font-size: 12px; line-height: 1.7; max-width: 300px; margin-top: 15px; }
+.copyright { display: flex; justify-content: space-between; color: #444; font-size: 11px; padding-top: 30px; font-weight: 600; flex-wrap: wrap; gap: 10px; }
+
+/* REPRODUCTOR CLOV RADIO */
+.music { position: fixed; bottom: 18px; left: 18px; z-index: 900; background: rgba(14, 14, 14, 0.92); border: 1px solid #2a2a2a; border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; backdrop-filter: blur(15px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.eq { display: flex; gap: 2px; align-items: flex-end; height: 14px; }
+.eq-bar { width: 3px; background: var(--accent); height: 3px; transition: .2s; }
+.eq.playing .eq-bar:nth-child(1) { animation: eq 0.6s ease infinite alternate; }
+.eq.playing .eq-bar:nth-child(2) { animation: eq 0.8s ease infinite alternate 0.2s; }
+.eq.playing .eq-bar:nth-child(3) { animation: eq 0.5s ease infinite alternate 0.4s; }
+@keyframes eq { 0% { height: 3px; } 100% { height: 14px; } }
+
+/* TOAST & CART DRAWER */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 1100; display: none; backdrop-filter: blur(4px); }
+.overlay.show { display: block; }
+.cart { position: fixed; right: -440px; top: 0; bottom: 0; width: min(440px, 100%); background: #0e0e0e; z-index: 1200; padding: 30px; transition: .4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; border-left: 1px solid var(--line); }
+.cart.open { right: 0; }
+.toast { position: fixed; bottom: 25px; right: 25px; background: var(--accent); color: #000; padding: 14px 22px; font-weight: 800; font-size: 12px; border-radius: 4px; z-index: 2000; transform: translateY(100px); opacity: 0; transition: .3s; }
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* MODAL DE PRODUCTO (POP-UP) */
+.product-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+  z-index: 1500; display: none; place-items: center; padding: 20px;
+}
+.product-modal-overlay.open { display: grid; }
+.product-modal {
+  background: #111; border: 1px solid var(--line); border-radius: 12px;
+  width: min(850px, 100%); max-height: 90vh; overflow-y: auto; position: relative;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 30px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+.modal-close-btn {
+  position: absolute; top: 15px; right: 20px; font-size: 24px; color: #888;
+  transition: .2s; cursor: pointer; z-index: 10;
+}
+.modal-close-btn:hover { color: var(--accent); }
+.modal-image-box { background: #1a1a1a; border-radius: 8px; overflow: hidden; aspect-ratio: 4/5; }
+.modal-image-box img { width: 100%; height: 100%; object-fit: cover; }
+.modal-details { display: flex; flex-direction: column; justify-content: center; }
+.modal-details h2 { font-size: 26px; font-family: "Space Grotesk"; margin-bottom: 8px; }
+.modal-color { font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 15px; letter-spacing: 1px; }
+.modal-price { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 20px; font-family: "Space Grotesk"; }
+.modal-desc { font-size: 13px; color: #aaa; line-height: 1.6; margin-bottom: 25px; border-top: 1px solid #222; border-bottom: 1px solid #222; padding: 15px 0; }
+.modal-label { font-size: 11px; color: var(--muted); font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+.modal-sizes { display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; }
+.modal-size-btn {
+  background: #181818; border: 1px solid #333; padding: 10px 16px; font-size: 12px;
+  font-weight: 800; color: #ccc; transition: .2s;
+}
+.modal-size-btn.selected, .modal-size-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+.qty-selector { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+.qty-btn { width: 36px; height: 36px; border: 1px solid #333; background: #181818; color: #fff; font-weight: 800; font-size: 16px; border-radius: 4px; display: grid; place-items: center; }
+.qty-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+.qty-val { font-size: 16px; font-weight: 800; width: 30px; text-align: center; }
+
+@media (max-width: 900px) {
+ .nav-links { display: none; }
+ .grid { grid-template-columns: repeat(2, 1fr); }
+ .builder-grid, .limited-wrap { grid-template-columns: 1fr; padding: 20px; }
+ .footer-top { grid-template-columns: 1fr 1fr; }
+ .hero-sub { flex-direction: column; align-items: flex-start; }
+ .buttons { width: 100%; flex-direction: column; }
+ .btn { width: 100%; }
+ .limited-art { min-height: 360px; }
+ .product-modal { grid-template-columns: 1fr; padding: 20px; gap: 20px; }
+}
+
+@media (max-width: 550px) {
+ .grid { grid-template-columns: 1fr; }
+ .footer-top { grid-template-columns: 1fr; }
+ .search-box input { width: 100%; }
+ .shop-controls { flex-direction: column; align-items: stretch; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR BLANCO CON SOMBRA -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-outline" id="cursorOutline"></div>
+
+<!-- MARQUEE TICKER -->
+<div class="ticker-wrap">
+ <div class="ticker-move">
+  <div class="ticker-item"><span>🔥 DROP 001 LIMITED</span><span>·</span><span>ENVÍOS A TODA COLOMBIA</span><span>·</span><span>BE DIFF. YOU FOUND US.</span><span>·</span><span>CLOV STREETWEAR</span><span>·</span></div>
+  <div class="ticker-item"><span>🔥 DROP 001 LIMITED</span><span>·</span><span>ENVÍOS A TODA COLOMBIA</span><span>·</span><span>BE DIFF. YOU FOUND US.</span><span>·</span><span>CLOV STREETWEAR</span><span>·</span></div>
+ </div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+ <div class="container nav-inner">
+  <a class="logo" id="logoBtn" href="#home" onclick="registerLogoClick()" title="3 clics para secreto...">CL<span>O</span>V</a>
+  <nav class="nav-links">
+   <a href="#shop">SHOP</a>
+   <a href="#outfits">OUTFITS</a>
+   <a href="#limited">LIMITED</a>
+   <a href="#about">ABOUT</a>
+   <a href="#contact">CONTACT</a>
+  </nav>
+  <div class="nav-actions">
+   <button class="icon-btn" onclick="openCart()" aria-label="Ver Carrito">🛒<span class="cart-badge" id="cartCount">0</span></button>
+  </div>
+ </div>
+</header>
+
+<main>
+<!-- HERO SECTION -->
+<section class="hero" id="home">
+ <div class="hero-content">
+  <div class="kicker">✦ YOU FOUND US</div>
+  <h1><span>BE</span><span>DIFF.</span></h1>
+  <div class="hero-sub">
+   <p>Streetwear urbano independiente. Siluetas oversize, actitud auténtica y drops exclusivos de alta calidad.</p>
+   <div class="buttons">
+    <a class="btn" href="#shop">SHOP NOW</a>
+    <a class="btn dark" href="#outfits">BUILD OUTFIT</a>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- SHOP CATALOG -->
+<section id="shop">
+ <div class="container">
+  <div class="section-head">
+   <div>
+    <div class="section-label">01 / SHOP</div>
+    <h2>THE DROP</h2>
+   </div>
+   <p>Prendas esenciales de CLOV. Haz clic en cualquier prenda para ver los detalles, selecciona tu talla y arma tu estilo.</p>
+  </div>
+
+  <div class="shop-controls">
+   <div class="filters">
+    <button class="filter active" onclick="filterProducts('all', this)">ALL</button>
+    <button class="filter" onclick="filterProducts('hoodie', this)">HOODIES</button>
+    <button class="filter" onclick="filterProducts('tee', this)">T-SHIRTS</button>
+    <button class="filter" onclick="filterProducts('pants', this)">PANTS</button>
+    <button class="filter" onclick="filterProducts('caps', this)">CAPS</button>
+   </div>
+   <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar prenda o color..." oninput="searchProducts()">
+   </div>
+  </div>
+
+  <div class="grid" id="products"></div>
+ </div>
+</section>
+
+<!-- SECCIÓN: CREADOR DE OUTFITS / STUDIO CUSTOMIZER -->
+<section id="outfits">
+ <div class="container">
+  <div class="section-head">
+   <div>
+    <div class="section-label">02 / STUDIO CUSTOMIZER</div>
+    <h2>ARMADOR DE OUTFITS</h2>
+   </div>
+   <p>Mezcla prendas superiores, inferiores y accesorios en tiempo real, calcula el total y añade la combinación completa a tu carrito.</p>
+  </div>
+
+  <div class="builder-grid">
+   <!-- Vista Previa Visual del Outfit -->
+   <div class="builder-preview">
+    <div style="font-size:10px; color:#666; letter-spacing:2px; margin-bottom:10px; font-weight:800">OUTFIT PREVIEW</div>
+    
+    <!-- Prenda Superior -->
+    <div class="preview-layer-box" id="boxTop">
+     <img src="images/hoodie.jpg" id="imgTop" alt="Top">
+     <div class="preview-layer-info">
+      <small style="color:#777; font-size:9px">PRENDA SUPERIOR</small>
+      <h4 id="txtTop">HOODIE CLOV NEON</h4>
+      <span id="priceTop">$150.000 COP</span>
+     </div>
+    </div>
+
+    <!-- Prenda Inferior -->
+    <div class="preview-layer-box" id="boxBottom">
+     <img src="images/cargo.jpg" id="imgBottom" alt="Bottom">
+     <div class="preview-layer-info">
+      <small style="color:#777; font-size:9px">PRENDA INFERIOR</small>
+      <h4 id="txtBottom">PANTALÓN CARGO STRAIGHT</h4>
+      <span id="priceBottom">$160.000 COP</span>
+     </div>
+    </div>
+
+    <!-- Accesorio -->
+    <div class="preview-layer-box" id="boxAcc">
+     <img src="images/hiphopcap.jpg" id="imgAcc" alt="Acc">
+     <div class="preview-layer-info">
+      <small style="color:#777; font-size:9px">ACCESORIO</small>
+      <h4 id="txtAcc">GORRA PLANA CAMO CLOV</h4>
+      <span id="priceAcc">$70.000 COP</span>
+     </div>
+    </div>
+   </div>
+
+   <!-- Controles de Selección -->
+   <div class="builder-controls">
+    <h3>SELECCIONA TUS PIEZAS</h3>
+    
+    <!-- 1. Top -->
+    <div class="control-group">
+     <label>1. PRENDA SUPERIOR (TOP)</label>
+     <div class="option-btns">
+      <button class="opt-btn active" onclick="setBuilder('top', 'HOODIE CLOV NEON', 150000, 'images/hoodie.jpg', this)">Hoodie Neon ($150k)</button>
+      <button class="opt-btn" onclick="setBuilder('top', 'CROP HOODIE PATTERN', 140000, 'images/croptophdie.jpg', this)">Crop Hoodie ($140k)</button>
+      <button class="opt-btn" onclick="setBuilder('top', 'TEE BE DIFF WITCH', 85000, 'images/brujillo.jpg', this)">Witch Tee ($85k)</button>
+      <button class="opt-btn" onclick="setBuilder('top', 'TEE OVERSIZED BE DIFF', 80000, 'images/tee.jpg', this)">White Tee ($80k)</button>
+     </div>
+    </div>
+
+    <!-- 2. Bottom -->
+    <div class="control-group">
+     <label>2. PRENDA INFERIOR (BOTTOM)</label>
+     <div class="option-btns">
+      <button class="opt-btn active" onclick="setBuilder('bottom', 'PANTALÓN CARGO STRAIGHT', 160000, 'images/cargo.jpg', this)">Cargo Beige ($160k)</button>
+      <button class="opt-btn" onclick="setBuilder('bottom', 'JEAN BAGGY STITCH', 170000, 'images/pant.jpg', this)">Baggy Jean ($170k)</button>
+     </div>
+    </div>
+
+    <!-- 3. Accesorio -->
+    <div class="control-group">
+     <label>3. ACCESORIO (CAP)</label>
+     <div class="option-btns">
+      <button class="opt-btn active" onclick="setBuilder('acc', 'GORRA PLANA CAMO CLOV', 70000, 'images/hiphopcap.jpg', this)">Gorra Camo ($70k)</button>
+      <button class="opt-btn" onclick="setBuilder('acc', 'GORRA VINTAGE CORDUROY', 65000, 'images/cap.jpg', this)">Gorra Vintage ($65k)</button>
+      <button class="opt-btn" onclick="setBuilder('acc', 'SIN ACCESORIO', 0, '', this)">Sin accesorio ($0)</button>
+     </div>
+    </div>
+
+    <div class="builder-total" id="builderTotal">TOTAL OUTFIT: $380.000 COP</div>
+    <button class="btn" style="width:100%" onclick="addCustomOutfit()">AÑADIR OUTFIT COMPLETO AL CARRITO +</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- LIMITED DROP -->
+<section class="limited" id="limited">
+ <div class="container limited-wrap">
+  <div class="limited-art" onclick="openProductModal(99)">
+   <img src="images/hoodie.jpg" class="censored-img" alt="Próximo Drop Censurado">
+   <div class="censored-overlay"></div>
+
+   <div class="limited-text-box">
+    <div class="classified-badge">CONFIDENTIAL DROP</div>
+    <div class="drop-number">DROP 001 / 050</div>
+    <h2 style="font-size: clamp(50px, 10vw, 80px); text-shadow: 0 0 30px rgba(0,0,0,0.9); line-height: 0.85;">ONLY<br>50.</h2>
+   </div>
+  </div>
+
+  <div>
+   <div class="section-label">03 / LIMITED EDITION</div>
+   <h2>DON'T MISS<br>THE DROP.</h2>
+   <p style="color:#aaa; line-height:1.8; margin-top:15px; font-size:15px">Edición numerada de unidades limitadas. Pesado gramaje premium con bordado flúor. Cuando el temporizador llegue a cero o las piezas se agoten, este diseño no volverá a producirse.</p>
+   
+   <div class="countdown">
+    <div class="timer-box"><span class="timer-num" id="cd-d">02</span><span class="timer-unit">DÍAS</span></div>
+    <div class="timer-box"><span class="timer-num" id="cd-h">14</span><span class="timer-unit">HORAS</span></div>
+    <div class="timer-box"><span class="timer-num" id="cd-m">32</span><span class="timer-unit">MIN</span></div>
+    <div class="timer-box"><span class="timer-num" id="cd-s">45</span><span class="timer-unit">SEG</span></div>
+   </div>
+
+   <div class="stock">
+    <div class="stock-line"><span>DISPONIBILIDAD EN STOCK</span><b>9 / 50 UNIDADES</b></div>
+    <div class="bar"><span></span></div>
+   </div>
+   <button class="btn" style="width:100%" onclick="openProductModal(99)">VER EDICIÓN LIMITADA ($249.000 COP)</button>
+  </div>
+ </div>
+</section>
+
+<!-- MANIFESTO / ABOUT -->
+<section class="brand" id="about">
+ <div class="container">
+  <div class="section-label">04 / THE MANIFESTO</div>
+  <h2>BE DIFF.</h2>
+  <p>CLOV nace para quienes entienden que la ropa no es solo tela. Es un lenguaje visual sin palabras. No busques encajar; marca tu propia pauta urbana.</p>
+ </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact" id="contact">
+ <div class="container">
+  <div class="section-label" style="color:#000">05 / DIRECT TALK</div>
+  <h2>NEED HELP?<br>TALK TO SOMEONE REAL.</h2>
+  <p>¿Dudas sobre tu talla ideal, envíos o estado de un pedido? Escríbenos directamente y te asesoramos al instante.</p>
+  <a class="btn" href="https://wa.me/573117417548?text=Hola%20CLOV,%20quiero%20informaci%C3%B3n" target="_blank">CHAT ON WHATSAPP (+57 311 741 7548) ↗</a>
+ </div>
+</section>
+</main>
+
+<footer class="footer">
+ <div class="container">
+  <div class="footer-top">
+   <div class="footer-brand">
+    <div class="logo">CL<span>O</span>V</div>
+    <p>YOU FOUND US. Ahora define tu estilo.</p>
+   </div>
+   <div>
+    <h4>SHOP</h4>
+    <a href="#shop">Todos los productos</a>
+    <a href="#shop">Hoodies</a>
+    <a href="#shop">T-Shirts</a>
+    <a href="#limited">Edición Limitada</a>
+   </div>
+   <div>
+    <h4>REDES</h4>
+    <a href="https://instagram.com/juanddioscl" target="_blank">Instagram (@juanddioscl)</a>
+    <a href="#" target="_blank">TikTok</a>
+    <a href="#" target="_blank">Facebook</a>
+   </div>
+   <div>
+    <h4>DIRECTOR</h4>
+    <a href="https://instagram.com/juanddioscl" target="_blank">Juan de Dios Cárdenas</a>
+    <a href="https://instagram.com/juanddioscl" target="_blank">@juanddioscl</a>
+    <a href="#contact">Soporte</a>
+   </div>
+  </div>
+  <div class="copyright">
+   <span>© 2026 CLOV. ALL RIGHTS RESERVED.</span>
+   <span>BE DIFF.</span>
+  </div>
+ </div>
+</footer>
+
+<!-- REPRODUCTOR CLOV RADIO SYNTH -->
+<div class="music">
+ <div class="eq" id="eqVis"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+ <button onclick="toggleSynth()" id="playBtn">▶</button>
+ <div style="font-size:10px">
+  <b style="display:block">CLOV RADIO</b>
+  <span style="color:#777" id="synthStatus">124 BPM · PAUSED</span>
+ </div>
+</div>
+
+<!-- MODAL DE PRODUCTO (POP-UP DETALLE) -->
+<div class="product-modal-overlay" id="productModalOverlay" onclick="closeProductModalOnOverlay(event)">
+ <div class="product-modal" id="productModal">
+  <button class="modal-close-btn" onclick="closeProductModal()">✕</button>
+  <div class="modal-image-box">
+   <img id="modalImg" src="" alt="Prenda CLOV">
+  </div>
+  <div class="modal-details">
+   <h2 id="modalTitle">PROD TITLE</h2>
+   <div class="modal-color" id="modalColor">COLOR</div>
+   <div class="modal-price" id="modalPrice">$0 COP</div>
+   <p class="modal-desc" id="modalDesc">Silueta urbana oversize confeccionada con algodón de alto gramaje. Acabados tácticos y durabilidad extrema para el día a día.</p>
+   
+   <span class="modal-label">SELECCIONA TU TALLA</span>
+   <div class="modal-sizes" id="modalSizes"></div>
+
+   <span class="modal-label">CANTIDAD</span>
+   <div class="qty-selector">
+    <button class="qty-btn" onclick="changeModalQty(-1)">-</button>
+    <span class="qty-val" id="modalQty">1</span>
+    <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+   </div>
+
+   <button class="btn" style="width:100%" onclick="addModalProductToCart()">AÑADIR AL CARRITO +</button>
+  </div>
+ </div>
+</div>
+
+<!-- TOAST & CART DRAWER -->
+<div class="toast" id="toast">✓ Producto añadido al carrito</div>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="cart" id="cart">
+ <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:1px solid var(--line); padding-bottom:15px">
+  <h3 style="font:800 24px 'Space Grotesk'">YOUR CART</h3>
+  <button onclick="closeCart()" style="font-size:22px; color:#888">✕</button>
+ </div>
+ <div id="cartItems"><p style="color:#777; font-size:13px">Tu carrito está vacío.</p></div>
+ <div style="margin-top:30px; border-top:1px solid #222; padding-top:20px">
+  <div style="display:flex; justify-content:space-between; margin:10px 0; font-size:13px; color:#aaa"><span>SUBTOTAL</span><b id="subtotal">$0</b></div>
+  <div style="display:flex; justify-content:space-between; margin:10px 0; font-size:13px; color:#aaa"><span>ENVÍO</span><b>$15.000</b></div>
+  <div style="display:flex; justify-content:space-between; font-weight:800; font-size:18px; color:#fff; border-top:1px solid #222; padding-top:15px; margin-top:15px"><span>TOTAL</span><span id="total">$15.000</span></div>
+  <button class="btn" style="width:100%; margin-top:20px" onclick="checkoutWompi()">PAGAR CON WOMPI</button>
+ </div>
+</aside>
+
+<script>
+// CURSOR EFFECT
+const dot = document.getElementById('cursorDot');
+const outline = document.getElementById('cursorOutline');
+window.addEventListener('mousemove', e => {
+ dot.style.left = e.clientX + 'px';
+ dot.style.top = e.clientY + 'px';
+ outline.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 250, fill: 'forwards' });
+});
+document.querySelectorAll('button, a, input').forEach(el => {
+ el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+ el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+
+// CATALOGO CON TUS IMÁGENES
+const products = [
+ {id:1, type:'hoodie', name:'HOODIE CLOV NEON', price:150000, color:'BLACK / GREEN', img:'images/hoodie.jpg', desc:'Hoodie oversize con capucha de triple panel y bordado flúor neon en pecho. Algodón frch terry de 400g.'},
+ {id:2, type:'hoodie', name:'CROP HOODIE PATTERN', price:140000, color:'GREY / PATTERN', img:'images/croptophdie.jpg', desc:'Crop hoodie de encaje urbano holgado. Estampado serigráfico en alta densidad resistente a lavados.'},
+ {id:3, type:'tee', name:'TEE BE DIFF WITCH', price:85000, color:'DARK BLUE', img:'images/brujillo.jpg', desc:'Camiseta de corte boxy fit con gráfico exclusivo Witch Edition. Algodón peinado de suave textura.'},
+ {id:4, type:'tee', name:'TEE OVERSIZED BE DIFF', price:80000, color:'WHITE', img:'images/tee.jpg', desc:'Tee blanca oversize con logo minimalista CLOV en contraste negro. Cuello reforzado anti-deformación.'},
+ {id:5, type:'pants', name:'PANTALÓN CARGO STRAIGHT', price:160000, color:'BEIGE', img:'images/cargo.jpg', desc:'Pantalón cargo de corte recto con múltiples bolsillos funcionales y ajuste en tobillos.'},
+ {id:6, type:'pants', name:'JEAN BAGGY STITCH', price:170000, color:'BLACK', img:'images/pant.jpg', desc:'Jean negro baggy con costuras contrastadas en hilo industrial blanco. Denim pesado 100% algodón.'},
+ {id:7, type:'caps', name:'GORRA PLANA CAMO CLOV', price:70000, color:'CAMO', img:'images/hiphopcap.jpg', desc:'Gorra urbana con visera plana y patrón camuflado exclusivo. Bordado frontal 3D.'},
+ {id:8, type:'caps', name:'GORRA VINTAGE CORDUROY', price:65000, color:'NAVY / BROWN', img:'images/cap.jpg', desc:'Gorra vintage en pana acanalada (corduroy) con broche metálico regulable.'},
+ {id:99, type:'hoodie', name:'LIMITED 001 HOODIE', price:249000, color:'BLACK / NEON', img:'images/hoodie.jpg', desc:'Edición numerada y limitada a 50 unidades globales. Incluye certificado de autenticidad y packaging de colección.', limitedOnly: true}
+];
+
+let cart = [];
+let selectedSizes = {};
+let activeFilter = 'all';
+
+// Variables para el Modal
+let currentModalProductId = null;
+let currentModalSize = 'M';
+let currentModalQty = 1;
+
+const money = n => new Intl.NumberFormat('es-CO', {style:'currency', currency:'COP', maximumFractionDigits:0}).format(n);
+
+function renderProducts(list = products) {
+ const box = document.getElementById('products');
+ const filteredList = list.filter(p => !p.limitedOnly);
+ 
+ if(!filteredList.length) {
+  box.innerHTML = '<p style="color:#777; grid-column:1/-1; text-align:center; padding:40px;">No se encontraron prendas.</p>';
+  return;
+ }
+ box.innerHTML = filteredList.map(p => {
+  const currentSize = selectedSizes[p.id] || (p.type === 'caps' ? 'UNIQUE' : 'M');
+  const sizeOptions = p.type === 'caps' ? ['UNIQUE'] : ['XS','S','M','L','XL'];
+  return `
+ <article class="product">
+  <div class="product-img" onclick="openProductModal(${p.id})">
+   <img src="${p.img}" alt="${p.name}">
+   <div class="quick-view-badge">VER DETALLE 👁</div>
+  </div>
+  <div class="product-info">
+   <h3 onclick="openProductModal(${p.id})">${p.name}</h3>
+   <p>${p.color} · TALLA: <b>${currentSize}</b></p>
+   <div class="sizes">
+    ${sizeOptions.map(sz => `
+     <button class="size-btn ${sz === currentSize ? 'selected' : ''}" onclick="selectSize(${p.id}, '${sz}')">${sz}</button>
+    `).join('')}
+   </div>
+   <div class="price">${money(p.price)}</div>
+   <button class="add" onclick="addProduct(${p.id})">ADD TO CART +</button>
+  </div>
+ </article>`;
+ }).join('');
+}
+
+function selectSize(id, sz) {
+ selectedSizes[id] = sz;
+ renderProducts(getFilteredList());
+}
+
+function filterProducts(type, btn) {
+ document.querySelectorAll('.filter').forEach(x => x.classList.remove('active'));
+ btn.classList.add('active');
+ activeFilter = type;
+ renderProducts(getFilteredList());
+}
+
+function searchProducts() { renderProducts(getFilteredList()); }
+
+function getFilteredList() {
+ const q = document.getElementById('searchInput').value.toLowerCase();
+ return products.filter(p => {
+  if (p.limitedOnly) return false;
+  const matchesType = activeFilter === 'all' || p.type === activeFilter;
+  const matchesSearch = p.name.toLowerCase().includes(q) || p.color.toLowerCase().includes(q);
+  return matchesType && matchesSearch;
+ });
+}
+
+// FUNCIONES DEL MODAL DE PRODUCTO (POP-UP)
+function openProductModal(id) {
+ const p = products.find(x => x.id === id);
+ if (!p) return;
+ 
+ currentModalProductId = id;
+ currentModalQty = 1;
+ currentModalSize = selectedSizes[id] || (p.type === 'caps' ? 'UNIQUE' : 'M');
+
+ document.getElementById('modalImg').src = p.img;
+ document.getElementById('modalTitle').textContent = p.name;
+ document.getElementById('modalColor').textContent = p.color;
+ document.getElementById('modalPrice').textContent = money(p.price);
+ document.getElementById('modalDesc').textContent = p.desc || 'Silueta urbana oversize confeccionada con algodón de alto gramaje. Acabados tácticos y durabilidad extrema.';
+ document.getElementById('modalQty').textContent = currentModalQty;
+
+ const sizeOptions = p.type === 'caps' ? ['UNIQUE'] : ['XS','S','M','L','XL'];
+ document.getElementById('modalSizes').innerHTML = sizeOptions.map(sz => `
+  <button class="modal-size-btn ${sz === currentModalSize ? 'selected' : ''}" onclick="setModalSize('${sz}')">${sz}</button>
+ `).join('');
+
+ document.getElementById('productModalOverlay').classList.add('open');
+}
+
+function closeProductModal() {
+ document.getElementById('productModalOverlay').classList.remove('open');
+}
+
+function closeProductModalOnOverlay(e) {
+ if (e.target.id === 'productModalOverlay') {
+  closeProductModal();
+ }
+}
+
+function setModalSize(sz) {
+ currentModalSize = sz;
+ if (currentModalProductId) {
+  selectedSizes[currentModalProductId] = sz;
+ }
+ document.querySelectorAll('.modal-size-btn').forEach(btn => {
+  btn.classList.toggle('selected', btn.textContent === sz);
+ });
+ renderProducts(getFilteredList());
+}
+
+function changeModalQty(delta) {
+ currentModalQty = Math.max(1, currentModalQty + delta);
+ document.getElementById('modalQty').textContent = currentModalQty;
+}
+
+function addModalProductToCart() {
+ if (!currentModalProductId) return;
+ const p = products.find(x => x.id === currentModalProductId);
+ const sz = currentModalSize;
+ const cartKey = `${p.id}-${sz}`;
+ const existing = cart.find(x => x.cartKey === cartKey);
+
+ if (existing) {
+  existing.qty += currentModalQty;
+ } else {
+  cart.push({...p, size: sz, cartKey, qty: currentModalQty});
+ }
+
+ renderCart();
+ closeProductModal();
+ showToast(`✓ ${p.name} (${sz}) x${currentModalQty} AÑADIDO`);
+ openCart();
+}
+
+// LOGICA DEL CREADOR DE OUTFITS
+let outfit = {
+ top: { name: 'HOODIE CLOV NEON', price: 150000, img: 'images/hoodie.jpg' },
+ bottom: { name: 'PANTALÓN CARGO STRAIGHT', price: 160000, img: 'images/cargo.jpg' },
+ acc: { name: 'GORRA PLANA CAMO CLOV', price: 70000, img: 'images/hiphopcap.jpg' }
+};
+
+function setBuilder(cat, name, price, img, btn) {
+ btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+ btn.classList.add('active');
+ outfit[cat] = { name, price, img };
+ 
+ const catCap = cat.charAt(0).toUpperCase() + cat.slice(1);
+ const box = document.getElementById('box' + catCap);
+ 
+ if (price === 0) {
+  box.style.opacity = '0.3';
+  document.getElementById('txt' + catCap).textContent = 'NINGUNO';
+  document.getElementById('price' + catCap).textContent = '$0';
+  document.getElementById('img' + catCap).style.display = 'none';
+ } else {
+  box.style.opacity = '1';
+  document.getElementById('txt' + catCap).textContent = name;
+  document.getElementById('price' + catCap).textContent = money(price);
+  const imgEl = document.getElementById('img' + catCap);
+  imgEl.style.display = 'block';
+  imgEl.src = img;
+ }
+ 
+ const total = outfit.top.price + outfit.bottom.price + outfit.acc.price;
+ document.getElementById('builderTotal').textContent = `TOTAL OUTFIT: ${money(total)} COP`;
+}
+
+function addCustomOutfit() {
+ const total = outfit.top.price + outfit.bottom.price + outfit.acc.price;
+ cart.push({ 
+  cartKey: 'custom-outfit-' + Date.now(), 
+  name: 'OUTFIT CUSTOMIZADO CLOV (' + outfit.top.name + ' + ' + outfit.bottom.name + ')', 
+  price: total, 
+  qty: 1, 
+  img: outfit.top.img, 
+  size: 'MIX' 
+ });
+ renderCart();
+ showToast('🔥 OUTFIT COMPLETO AÑADIDO');
+ openCart();
+}
+
+// CARRITO Y WOMPI
+function addProduct(id) {
+ const p = products.find(x => x.id === id);
+ const sz = selectedSizes[id] || (p.type === 'caps' ? 'UNIQUE' : 'M');
+ const cartKey = `${id}-${sz}`;
+ const existing = cart.find(x => x.cartKey === cartKey);
+ 
+ if(existing) { existing.qty++; } else { cart.push({...p, size: sz, cartKey, qty: 1}); }
+ renderCart();
+ showToast(`✓ ${p.name} (${sz}) AÑADIDO`);
+ openCart();
+}
+
+function renderCart() {
+ document.getElementById('cartCount').textContent = cart.reduce((a,x) => a + x.qty, 0);
+ const box = document.getElementById('cartItems');
+ if(!cart.length) {
+  box.innerHTML = '<p style="color:#777;font-size:13px;padding:20px 0;">Tu carrito está vacío.</p>';
+ } else {
+  box.innerHTML = cart.map(p => `
+   <div style="display:grid; grid-template-columns: 60px 1fr; gap:12px; margin-bottom:15px; border-bottom:1px solid #1a1a1a; padding-bottom:12px">
+    <img src="${p.img}" style="height:70px; object-fit:cover; background:#1a1a1a">
+    <div>
+     <h4 style="font-size:12px">${p.name}</h4>
+     <p style="font-size:11px; color:#888">Talla: <b>${p.size}</b> x ${p.qty}</p>
+     <p style="color:var(--accent); font-weight:800; font-size:13px; margin-top:4px">${money(p.price * p.qty)}</p>
+    </div>
+   </div>`).join('');
+ }
+ const subtotal = cart.reduce((a,x) => a + x.price * x.qty, 0);
+ const shipping = subtotal > 0 ? 15000 : 0;
+ document.getElementById('subtotal').textContent = money(subtotal);
+ document.getElementById('total').textContent = money(subtotal + shipping);
+}
+
+function checkoutWompi() {
+ const subtotal = cart.reduce((a, x) => a + x.price * x.qty, 0);
+ if (subtotal === 0) {
+  showToast('⚠️ Tu carrito está vacío');
+  return;
+ }
+ const shipping = 15000;
+ const totalCOP = subtotal + shipping;
+ const amountInCents = totalCOP * 100;
+ const reference = 'CLOV-' + Date.now();
+ const publicKey = 'pub_prod_7QwCQYYsoVARgLFbryugOrAPe5RPriQz';
+ const wompiCheckoutUrl = `https://checkout.wompi.co/p/?public-key=${publicKey}&currency=COP&amount-in-cents=${amountInCents}&reference=${reference}`;
+ window.location.href = wompiCheckoutUrl;
+}
+
+function openCart() { document.getElementById('cart').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
+function closeCart() { document.getElementById('cart').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+
+function showToast(msg) {
+ const t = document.getElementById('toast');
+ t.textContent = msg;
+ t.classList.add('show');
+ setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// EASTER EGG
+let logoClicks = 0;
+function registerLogoClick() {
+ logoClicks++;
+ if(logoClicks === 3) {
+  document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+  showToast('⚡ CYBER GLITCH UNLOCKED: CUPÓN -20% [BEDIFF20]');
+  setTimeout(() => document.body.style.filter = 'none', 3000);
+  logoClicks = 0;
+ }
+}
+
+// TIMER REAL
+function initTimer() {
+ let target = new Date().getTime() + (2 * 86400000) + (14 * 3600000) + (32 * 60000);
+ setInterval(() => {
+  const now = new Date().getTime();
+  const diff = Math.max(0, target - now);
+  document.getElementById('cd-d').textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+  document.getElementById('cd-h').textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+  document.getElementById('cd-m').textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+  document.getElementById('cd-s').textContent = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+ }, 1000);
+}
+
+// AUDIO SYNTH
+let synthActive = false;
+function toggleSynth() {
+ synthActive = !synthActive;
+ document.getElementById('eqVis').classList.toggle('playing', synthActive);
+ document.getElementById('playBtn').textContent = synthActive ? '❚❚' : '▶';
+ document.getElementById('synthStatus').textContent = synthActive ? '124 BPM · PLAYING' : '124 BPM · PAUSED';
+}
+
+window.addEventListener('scroll', () => {
+ document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+
+renderProducts();
+renderCart();
+initTimer();
+</script>
+</body>
+</html>
