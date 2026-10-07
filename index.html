@@ -830,7 +830,7 @@ function renderCart() {
  document.getElementById('total').textContent = money(subtotal + shipping);
 }
 
-function checkoutWompi() {
+async function checkoutWompi() {
  const subtotal = cart.reduce((a, x) => a + x.price * x.qty, 0);
  if (subtotal === 0) {
   showToast('⚠️ Tu carrito está vacío');
@@ -840,9 +840,27 @@ function checkoutWompi() {
  const totalCOP = subtotal + shipping;
  const amountInCents = totalCOP * 100;
  const reference = 'CLOV-' + Date.now();
- const publicKey = 'pub_prod_7QwCQYYsoVARgLFbryugOrAPe5RPriQz';
- const wompiCheckoutUrl = `https://checkout.wompi.co/p/?public-key=${publicKey}&currency=COP&amount-in-cents=${amountInCents}&reference=${reference}`;
- window.location.href = wompiCheckoutUrl;
+
+ try {
+  showToast('⏳ Conectando con la pasarela segura...');
+  
+  // Llamada a tu API backend en Vercel
+  const response = await fetch('/api/checkout', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify({ amountInCents, reference })
+  });
+
+  const data = await response.json();
+  if (data.url) {
+   window.location.href = data.url;
+  } else {
+   showToast('❌ Error al iniciar el pago');
+  }
+ } catch (error) {
+  console.error(error);
+  showToast('❌ Error de conexión');
+ }
 }
 
 function openCart() { document.getElementById('cart').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
